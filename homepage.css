@@ -1,0 +1,101 @@
+
+img {
+	width:300px;
+	padding:20px;
+	border-radius: 25px;
+}
+
+.row div {
+	transition: background .25s ease-in-out;
+   -moz-transition: background .25s ease-in-out;
+   -webkit-transition: background .25s ease-in-out;
+}
+
+.col-sm-3 {
+	border-radius:25px;
+}
+
+.connect:hover {
+    background:rgba(51, 255, 255, 0.5);
+} 
+
+.play:hover {
+    background:rgba(200, 50, 0, 0.5);
+} 
+
+.study:hover {
+    background:rgba(255, 128, 0, 0.5);
+} 
+
+
+.jumbotron{
+	text-align: center;
+	background-color:rgba(0, 255, 50, 0.3) !important;
+}
+
+/*Bracket effect*/
+.cl-effect-1 a::before,
+.cl-effect-1 a::after {
+	color:black;
+	display: inline-block;
+	opacity: 0;
+	-webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+	-moz-transition: -moz-transform 0.3s, opacity 0.2s;
+	transition: transform 0.3s, opacity 0.2s;
+}
+
+.cl-effect-1 a::before {
+	color:black;
+	margin-right: 10px;
+	content: '[';
+	-webkit-transform: translateX(20px);
+	-moz-transform: translateX(20px);
+	transform: translateX(20px);
+}
+
+.cl-effect-1 a::after {
+	color:black;
+	margin-left: 10px;
+	content: ']';
+	-webkit-transform: translateX(-20px);
+	-moz-transform: translateX(-20px);
+	transform: translateX(-20px);
+}
+
+.cl-effect-1 a:hover::before,
+.cl-effect-1 a:hover::after,
+.cl-effect-1 a:focus::before,
+.cl-effect-1 a:focus::after {
+	color:black;
+	opacity: 1;
+	-webkit-transform: translateX(0px);
+	-moz-transform: translateX(0px);
+	transform: translateX(0px);
+}
+
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700|Raleway:400,300,700);
+@font-face {
+	font-family: 'codropsicons';
+	src:url('../fonts/codropsicons/codropsicons.eot');
+	src:url('../fonts/codropsicons/codropsicons.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/codropsicons/codropsicons.woff') format('woff'),
+		url('../fonts/codropsicons/codropsicons.ttf') format('truetype'),
+		url('../fonts/codropsicons/codropsicons.svg#codropsicons') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+.cl-effect-1 a:hover
+{
+	color:black;
+	text-decoration: none;
+}
+.cl-effect-1 a
+{
+	color:black;
+	text-decoration: none;
+}
+
+
+footer{
+	text-align: center;
+}
