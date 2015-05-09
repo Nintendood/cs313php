@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Amiibo Survey: Questionaire</title>
+<link rel="stylesheet" type="text/css" href="survey.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+</script>
+<script>
+function validate() {
+
+	var items = document.getElementById("theForm").elements;
+
+	var numAmiibo = $("input[name='numAmiibo']").filter(':checked').length;
+	var buyAmiibo = $("input[name='buyAmiibo']").filter(':checked').length;
+	var reason = $("input[name='reason[]']").filter(':checked').length;
+	var satisfaction = document.getElementById("satisfaction").value;
+
+	if (numAmiibo == 0 || buyAmiibo == 0 || reason == 0 || satisfaction == "")
+	{
+		alert("Please enter all fields before submitting.");
+		return false;
+	}
+
+    var text;
+
+    // If x is Not a Number or less than one or greater than 10
+    if (isNaN(satisfaction) || satisfaction < 0 || satisfaction > 100) {
+        document.getElementById("invalid").innerHTML = "Input not valid";
+        return false;
+    }    
+}
+
+function viewResults()
+{
+	window.location.href = "displayresults.php";
+}
+
+function getCookie()
+{
+	var cookie = document.cookie;
+	if (cookie)
+	{
+		window.location.href = "displayresults.php";
+	}
+}
+</script>
+</head>
+<body onload="getCookie();">
+<div>
+<h1><img src="amiibo_logo.png" class="logo"/></h1>
+	<form id="theForm" action="surveysubmit.php" method="POST" onsubmit="return validate()">
+
+		<div class="question">
+
+			<h5>How many Amiibo do you currently own?</h5>
+			<p><input type="radio" id="numAmiibo" name="numAmiibo" value="0">0</p>
+			<p><input type="radio" id="numAmiibo" name="numAmiibo" value="1 - 4">1 - 4</p>
+			<p><input type="radio" id="numAmiibo" name="numAmiibo" value="5 - 10">5 - 10</p>
+			<p><input type="radio" id="numAmiibo" name="numAmiibo" value="11 - 20">11 - 20</p>
+			<p><input type="radio" id="numAmiibo" name="numAmiibo" value="21 or more">21 or more</p>
+		</div>
+
+		<div class="question">
+			<h5>Do you plan on purchasing more Amiibo?</h5>
+			<p><input type="radio" id="buyAmiibo" name="buyAmiibo" value="Yes">Yes</p>
+			<p><input type="radio" id="buyAmiibo" name="buyAmiibo" value="No">No</p>
+			<p><input type="radio" id="buyAmiibo" name="buyAmiibo" value="Not Sure">Not Sure</p>
+		</div>
+
+		<div class="question">
+			<h5>Why do you purchase Amiibo? (Check all that apply, at least 1)</h5>
+			<p><input type="checkbox" id="reason" name="reason[]" value="1">I want to unlock additional content in certain Nintendo games</p>
+			<p><input type="checkbox" id="reason" name="reason[]" value="2">I am a fan of the characters or franchise represented (such as Mario or Link)</p>
+			<p><input type="checkbox" id="reason" name="reason[]" value="3">I find them to be reasonably priced</p>
+			<p><input type="checkbox" id="reason" name="reason[]" value="4">I am addicted and have no choice but to collect every single one</p>
+		</div>
+
+		<div class="question">
+			<h5>How satisfied are you with the in-game content available only with use of Amiibo figures?
+			(Use a scale of 0 - 100 with 0 meaning "Not at all satisified" and 100 meaning "Extremely satisifed")</h5>
+			<input type="input" id="satisfaction" name="satisfaction" size="3" maxlength="3"/>
+			<p id="invalid"></p>
+		</div>
+		<br/>
+		<input type="submit" value="Submit">
+		<button type="button" id="view" onclick="viewResults();">View Results</button>
+		<br/>
+		<br/>
+	</form>
+</div>
+</body>
+</html>
