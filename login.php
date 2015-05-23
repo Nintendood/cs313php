@@ -32,16 +32,24 @@ session_start();
         else
         {
             try
-            {
-                $user = 'php';
-                $password = 'passw0rd';
-                $db = new PDO("mysql:host=localhost; dbname=type_multiplier",$user,$password); 
-            }
-            catch (PDOException $ex)
-            {
-                echo 'Error!: ' . $ex->getMessage();
-                die();
-            }
+        {
+
+            $dbHost = getenv('OPENSHIFT_MYSQL_DB_HOST');
+            $dbPort = getenv('OPENSHIFT_MYSQL_DB_PORT');
+            $dbUser = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
+            $dbPassword = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
+
+            $user = 'php';
+            $password = 'passw0rd';
+            $db = new PDO("mysql:host=$dbHost:$dbPort; dbname=type_multiplier",$dbUser,$dbPassword); 
+
+            //$db = new PDO("mysql:host=localhost; dbname=type_multiplier",$user,$password); 
+        }
+        catch (PDOException $ex)
+        {
+            echo 'Error!: ' . $ex->getMessage();
+            die();
+        }
 
             $usernameExists = false;
 
