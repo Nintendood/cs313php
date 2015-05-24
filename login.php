@@ -9,8 +9,10 @@ session_start();
         <link rel="stylesheet" type="text/css" href="calculator.css">
     </head>
     <!--need php_readonly somewhere -->
-    <body>        
-        <h1>Pok&eacute;mon!</h1>
+    <body>
+        <div>      
+        <h1><img src="pokemon.png" class="logo"/></h1>
+        <h2>Type Modifier Calculator</h2>
 
         <?php
 
@@ -26,7 +28,7 @@ session_start();
             echo "<form id=\"login\" action=\"login.php\" method=\"POST\">";
             echo "<p>Username <input type=\"input\" name=\"username\" id=\"username\"/></p>";
             echo "<p>Password <input type=\"password\" name=\"password\" id=\"password\"/></p>";
-            echo "<button type=\"submit\">Calculate</button>";
+            echo "<button type=\"submit\">Log In</button>";
             echo "</form>";
         }
         else
@@ -38,16 +40,17 @@ session_start();
             $dbPort = getenv('OPENSHIFT_MYSQL_DB_PORT');
             $dbUser = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
             $dbPassword = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
-
-            $user = 'php';
-            $password = 'passw0rd';
             $db = new PDO("mysql:host=$dbHost:$dbPort; dbname=type_multiplier",$dbUser,$dbPassword); 
 
+            //echo "host:$dbHost:$dbPort dbName:$dbName user:$dbUser password:$dbPassword<br />\n";
+
+            //$user = 'php';
+            //$password = 'passw0rd';
             //$db = new PDO("mysql:host=localhost; dbname=type_multiplier",$user,$password); 
         }
         catch (PDOException $ex)
         {
-            echo 'Error!: ' . $ex->getMessage();
+            echo '<p>Error!: ' . $ex->getMessage() . "</p>";
             die();
         }
 
@@ -84,6 +87,6 @@ session_start();
             }
         }
         ?>
-
+        </div>
     </body>
 </html>
