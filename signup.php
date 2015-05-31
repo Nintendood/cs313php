@@ -10,7 +10,7 @@ session_start();
     </head>
     <!--need php_readonly somewhere -->
     <body>
-        <div class="login">      
+        <div class="signup">      
         <h1><img src="pokemon.png" class="logo"/></h1>
         <h2>Type Modifier Calculator</h2>
 
@@ -25,15 +25,11 @@ session_start();
         }
         if (!$usernameSent || $username == "")
         {
-            echo "<form id=\"login\" action=\"login.php\" method=\"POST\">";
+            echo "<form id=\"signup\" action=\"signup.php\" method=\"POST\">";
             echo "<p>Username <input type=\"input\" name=\"username\" id=\"username\"/></p>";
             echo "<p>Password <input type=\"password\" name=\"password\" id=\"password\"/></p>";
-            echo "<button type=\"submit\">Log In</button> ";
+            echo "<button type=\"signup\" onclick=\"addUserData\">Sign Up</button>";
             echo "</form>";
-            echo "<form id=\"signup\" action=\"signup.php\" method=\"POST\">";
-            echo "<button type=\"submit\" onclick=\"addUserData\">Sign Up</button>";
-            echo "</form>";
-
         }
         else
         {
@@ -60,7 +56,7 @@ session_start();
 
             $usernameExists = false;
 
-            foreach ($db->query('SELECT * from users') as $row)
+            foreach ($db->query("SELECT * from users WHERE username='$username'") as $row)
             {
                 if ($row['username'] == $username)
                 {
@@ -71,35 +67,24 @@ session_start();
 
             if ($usernameExists)
             {
-                $password = $_POST['password'];
-                foreach ($db->query("SELECT password from users where username = '$username' ") as $row)
-                {
-                    if ($row['password'] == $password)
-                    {
-                        $_SESSION['username'] = $username;
-                        header('Location: typeCalculator2.php');  
-                    }
-                    else
-                    {
-                        echo "<p>Login information was incorrect. Please try again.</p>";
-                        echo "<form id=\"login\" action=\"login.php\" method=\"POST\">";
-                        echo "<p>Username <input type=\"input\" name=\"username\" id=\"username\"/></p>";
-                        echo "<p>Password <input type=\"password\" name=\"password\" id=\"password\"/></p>";
-                        echo "<button type=\"submit\">Log In</button> ";
-                        echo "<button type=\"signup\">Sign Up</button>";
-                        echo "</form>";
-                    }
-                }
+                echo "<p>There is already a user by that name. Please choose a different username.</p>";
+                echo "<form id=\"signup\" action=\"signup.php\" method=\"POST\">";
+                echo "<p>Username <input type=\"input\" name=\"username\" id=\"username\"/></p>";
+                echo "<p>Password <input type=\"password\" name=\"password\" id=\"password\"/></p>";
+                echo "<button type=\"signup\">Sign Up</button>";
+                echo "</form>";
             }
             else
             {
-                echo "<p>Login Information was incorrect. Please try again.</p>";
-                echo "<form id=\"login\" action=\"login.php\" method=\"POST\">";
-                echo "<p>Username <input type=\"input\" name=\"username\" id=\"username\"/></p>";
-                echo "<p>Password <input type=\"password\" name=\"password\" id=\"password\"/></p>";
-                echo "<button type=\"submit\">Log In</button> ";
-                echo "<button type=\"signup\">Sign Up</button>";
-                echo "</form>";
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+                $qry = $db->prepare("INSERT INTO users (username, password) VALUES (:username, :password);");
+                $qry->bindValue(':username', $username);
+                $qry->bindValue(':password', $password);
+                $qry->execute();
+
+                $_SESSION['username'] = $username;
+                header('Location: typeCalculator2.php');  
             }
         }
         ?>
