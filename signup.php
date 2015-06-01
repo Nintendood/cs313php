@@ -15,7 +15,8 @@ session_start();
         <h2>Type Modifier Calculator</h2>
 
         <?php
-
+        error_reporting(E_ALL);
+        ini_set("display_errors", 1);
         $usernameSent = isset($_POST["username"]);
         $username = "";
 

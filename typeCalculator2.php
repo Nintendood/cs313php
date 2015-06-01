@@ -16,7 +16,8 @@ session_start();
         <h2>Type Modifier Calculator</h2>
         <br/>
         <?php
-
+        error_reporting(E_ALL);
+        ini_set("display_errors", 1);
 
         try
         {
@@ -27,7 +28,6 @@ session_start();
             $db = new PDO("mysql:host=$dbHost:$dbPort; dbname=type_multiplier",$dbUser,$dbPassword); 
 
             //echo "host:$dbHost:$dbPort dbName:$dbName user:$dbUser password:$dbPassword<br />\n";
-
             //$user = 'php';
             //$password = 'passw0rd';
             //$db = new PDO("mysql:host=localhost; dbname=type_multiplier",$user,$password); 

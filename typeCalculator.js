@@ -305,6 +305,7 @@ function addPartyToDB()
 			if (req.status == 200)
 			{
 				var resp = req.responseText;
+				alert(resp);
 				return;
 			}
 			else
