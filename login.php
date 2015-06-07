@@ -6,19 +6,20 @@ session_start();
     <head>
         <title>Pok&eacute;mon Type Modifier</title>
         <script type="text/javascript" src="login.js"></script>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="calculator.css">
     </head>
     <!--need php_readonly somewhere -->
     <body>
         <div class="login">      
         <h1><img src="pokemon.png" class="logo"/></h1>
-        <h2>Type Modifier Calculator</h2>
+        <h3>Type Modifier Calculator</h3>
 
         <?php
         error_reporting(E_ALL);
         ini_set("display_errors", 1);
 
-        $usernameSent = isset($_POST["username"]);
+     $usernameSent = isset($_POST["username"]);
         $username = "";
 
         if ($usernameSent)
@@ -28,12 +29,16 @@ session_start();
         if (!$usernameSent || $username == "")
         {
             echo "<form id=\"login\" action=\"login.php\" method=\"POST\">";
-            echo "<p>Username <input type=\"input\" name=\"username\" id=\"username\"/></p>";
-            echo "<p>Password <input type=\"password\" name=\"password\" id=\"password\"/></p>";
-            echo "<button type=\"submit\">Log In</button> ";
-            echo "</form>";
+            echo "<div class=\"col-xs-6\">";
+            echo "<p>Username <input class=\"form-control \" type=\"input\" name=\"username\" id=\"username\"/></p>";
+            echo "</div>";
+            echo "<div class=\"col-xs-6\">";
+            echo "<p>Password <input class=\"form-control\" type=\"password\" name=\"password\" id=\"password\"/></p>";
+            echo "</div>";
+            echo "</br><button class=\"btn btn-primary btn-block\" type=\"submit\">Log In</button> ";
+            echo "</br></form>";
             echo "<form id=\"signup\" action=\"signup.php\" method=\"POST\">";
-            echo "<button type=\"submit\" onclick=\"addUserData\">Sign Up</button>";
+            echo "<button class=\"btn btn-info btn-block\" type=\"submit\" onclick=\"addUserData\">Sign Up</button>";
             echo "</form>";
 
         }
@@ -58,7 +63,7 @@ session_start();
             die();
         }
 
-            $usernameExists = false;
+    $usernameExists = false;
 
             foreach ($db->query('SELECT * from users') as $row)
             {
@@ -74,7 +79,7 @@ session_start();
                 $password = $_POST['password'];
                 foreach ($db->query("SELECT password from users where username = '$username' ") as $row)
                 {
-                    if ($row['password'] == $password)
+                    if (password_verify($password, $row['password']))
                     {
                         $_SESSION['username'] = $username;
                         header('Location: typeCalculator2.php');  
@@ -83,10 +88,16 @@ session_start();
                     {
                         echo "<p>Login information was incorrect. Please try again.</p>";
                         echo "<form id=\"login\" action=\"login.php\" method=\"POST\">";
-                        echo "<p>Username <input type=\"input\" name=\"username\" id=\"username\"/></p>";
-                        echo "<p>Password <input type=\"password\" name=\"password\" id=\"password\"/></p>";
-                        echo "<button type=\"submit\">Log In</button> ";
-                        echo "<button type=\"signup\">Sign Up</button>";
+                        echo "<div class=\"col-xs-6\">";
+                        echo "<p>Username <input class=\"form-control \" type=\"input\" name=\"username\" id=\"username\"/></p>";
+                        echo "</div>";
+                        echo "<div class=\"col-xs-6\">";
+                        echo "<p>Password <input class=\"form-control\" type=\"password\" name=\"password\" id=\"password\"/></p>";
+                        echo "</div>";
+                        echo "</br><button class=\"btn btn-primary btn-block\" type=\"submit\">Log In</button> ";
+                        echo "</br></form>";
+                        echo "<form id=\"signup\" action=\"signup.php\" method=\"POST\">";
+                        echo "<button class=\"btn btn-info btn-block\" type=\"submit\" onclick=\"addUserData\">Sign Up</button>";
                         echo "</form>";
                     }
                 }
@@ -95,10 +106,16 @@ session_start();
             {
                 echo "<p>Login Information was incorrect. Please try again.</p>";
                 echo "<form id=\"login\" action=\"login.php\" method=\"POST\">";
-                echo "<p>Username <input type=\"input\" name=\"username\" id=\"username\"/></p>";
-                echo "<p>Password <input type=\"password\" name=\"password\" id=\"password\"/></p>";
-                echo "<button type=\"submit\">Log In</button> ";
-                echo "<button type=\"signup\">Sign Up</button>";
+                echo "<div class=\"col-xs-6\">";
+                echo "<p>Username <input class=\"form-control \" type=\"input\" name=\"username\" id=\"username\"/></p>";
+                echo "</div>";
+                echo "<div class=\"col-xs-6\">";
+                echo "<p>Password <input class=\"form-control\" type=\"password\" name=\"password\" id=\"password\"/></p>";
+                echo "</div>";
+                echo "</br><button class=\"btn btn-primary btn-block\" type=\"submit\">Log In</button> ";
+                echo "</br></form>";
+                echo "<form id=\"signup\" action=\"signup.php\" method=\"POST\">";
+                echo "<button class=\"btn btn-info btn-block\" type=\"submit\" onclick=\"addUserData\">Sign Up</button>";
                 echo "</form>";
             }
         }

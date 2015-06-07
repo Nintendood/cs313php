@@ -40,13 +40,41 @@ function calculate()
 				var resp = req.responseText;
 				var text = resp.split(",");
 				getRequest.splice(i, 1);
+
+				var color;
+
+				switch(text[1])
+				{
+					case "0x":
+					color = "#FFFFFF"
+					break;
+					case "0.25x":
+					color = "#0066FF"
+					break;
+					case "0.5x":
+					color = "#33CC33"
+					break;
+					case "1x":
+					color = "#FFFF00"
+					break;
+					case "2x":
+					color = "#FF9900"
+					break;
+					case "4x":
+					color = "#FF3300"
+					break;
+				}
+
+				var modifier = document.getElementById("modifier" + text[0]);
 	
-				document.getElementById("modifier" + text[0]).innerHTML = text[1];
+				modifier.innerHTML = text[1];
+				modifier.style.color = color;
 				return;
 			}
 			else
 			{
-				alert("Status: " + req.status);
+				if (status != 0)
+					alert("Status: " + req.status);
 				return false;
 			}
 		}
@@ -187,7 +215,8 @@ function addToDB()
 			}
 			else
 			{
-				alert("Status: " + req.status);
+				if (status != 0)
+					alert("Status: " + req.status);
 				return false;
 			}
 		}
@@ -249,7 +278,8 @@ function deleteFromDB()
 			}
 			else
 			{
-				alert("Status: " + req.status);
+				if (status != 0)
+					alert("Status: " + req.status);
 				return false;
 			}
 		}
@@ -309,7 +339,8 @@ function addPartyToDB()
 			}
 			else
 			{
-				alert("Status: " + req.status);
+				if (status != 0)
+					alert("Status: " + req.status);
 				return false;
 			}
 		}
@@ -371,7 +402,8 @@ function deletePartyFromDB()
 			}
 			else
 			{
-				alert("Status: " + req.status);
+				if (status != 0)
+					alert("Status: " + req.status);
 				return false;
 			}
 		}

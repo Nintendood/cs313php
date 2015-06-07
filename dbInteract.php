@@ -10,11 +10,6 @@
             $dbUser = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
             $dbPassword = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
             $db = new PDO("mysql:host=$dbHost:$dbPort; dbname=type_multiplier",$dbUser,$dbPassword); 
-
-            //echo "host:$dbHost:$dbPort dbName:$dbName user:$dbUser password:$dbPassword<br />\n";
-            //$user = 'php';
-            //$password = 'passw0rd';
-            //$db = new PDO("mysql:host=localhost; dbname=type_multiplier",$user,$password); 
         }
         catch (PDOException $ex)
         {
@@ -22,16 +17,20 @@
             die();
         }
 
-    switch ($op) {
+       switch ($op) {
 
         case 'save':
             $id = $_GET['id'];
             $name = $_GET['name'];
             $defendType1 = $_GET['defendType1'];
             $defendType2 = $_GET['defendType2'];
-            $qry = "UPDATE pokemon SET name='$name' , type1='$defendType1' , type2='$defendType2'
-                    WHERE id=$id;";
-            $db->query($qry);
+            $qry = $db->prepare("UPDATE pokemon SET name=:name , type1=:defendType1 , type2=:defendType2
+                    WHERE id=:id;");
+            $qry->bindValue(':name', $name);
+            $qry->bindValue(':defendType1', $defendType1);
+            $qry->bindValue(':defendType2', $defendType2);
+            $qry->bindValue(':id', $id);
+            $qry->execute();
         break;
 
         case 'get':
@@ -40,20 +39,20 @@
             $defendType2 = $_GET['defendType2'];
             $modifierid = $_GET['modifierid'];
 
-            $qry1 = "SELECT " . $defendType1 . " FROM multipliers WHERE attackType = '" . $attackType . "';";
-            $qry2 = "SELECT " . $defendType2 . " FROM multipliers WHERE attackType = '" . $attackType . "';";
+            $qry = $db->prepare("SELECT * FROM multipliers WHERE attackType = :at;");
+            $qry->bindParam(':at', $attackType);
+            $qry->execute();
 
-            foreach ($db->query($qry1) as $row)
-                {
-                    $modifier = $row[$defendType1] * 1.0;
-                }
+            while ($row = $qry->fetch(PDO::FETCH_ASSOC))
+            {
+                $modifier = $row[$defendType1] * 1.0;
+
                 if ($defendType2 != "blank")
                 {
-                    foreach ($db->query($qry2) as $row)
-                    {
-                        $modifier *= $row[$defendType2];
-                    }
+                    $modifier *= $row[$defendType2];
                 }
+            }
+
             echo $modifierid . "," . $modifier . "x";
         break;
 
