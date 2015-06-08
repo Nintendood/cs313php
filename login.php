@@ -5,7 +5,6 @@ session_start();
 <html>
     <head>
         <title>Pok&eacute;mon Type Modifier</title>
-        <script type="text/javascript" src="login.js"></script>
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="calculator.css">
     </head>
@@ -16,6 +15,8 @@ session_start();
         <h3>Type Modifier Calculator</h3>
 
         <?php
+        
+        require "password.php";
 
         $usernameSent = isset($_POST["username"]);
         $username = "";
@@ -36,25 +37,25 @@ session_start();
             echo "</br><button class=\"btn btn-primary btn-block\" type=\"submit\">Log In</button> ";
             echo "</br></form>";
             echo "<form id=\"signup\" action=\"signup.php\" method=\"POST\">";
-            echo "<button class=\"btn btn-info btn-block\" type=\"submit\" onclick=\"addUserData\">Sign Up</button>";
+            echo "<button class=\"btn btn-info btn-block\" type=\"submit\">Sign Up</button>";
             echo "</form>";
 
         }
         else
         {
             try
-        {
-            $dbHost = getenv('OPENSHIFT_MYSQL_DB_HOST');
-            $dbPort = getenv('OPENSHIFT_MYSQL_DB_PORT');
-            $dbUser = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
-            $dbPassword = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
-            $db = new PDO("mysql:host=$dbHost:$dbPort; dbname=type_multiplier",$dbUser,$dbPassword); 
-        }
-        catch (PDOException $ex)
-        {
-            echo '<p>Error!: ' . $ex->getMessage() . "</p>";
-            die();
-        }
+            {
+                $dbHost = getenv('OPENSHIFT_MYSQL_DB_HOST');
+                $dbPort = getenv('OPENSHIFT_MYSQL_DB_PORT');
+                $dbUser = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
+                $dbPassword = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
+                $db = new PDO("mysql:host=$dbHost:$dbPort; dbname=type_multiplier",$dbUser,$dbPassword); 
+            }
+            catch (PDOException $ex)
+            {
+                echo '<p>Error!: ' . $ex->getMessage() . "</p>";
+                die();
+            }
 
             $usernameExists = false;
 
