@@ -17,16 +17,13 @@ session_start();
         <h3>Type Modifier Calculator</h3>
         <br/>
         <?php
-        error_reporting(E_ALL);
-        ini_set("display_errors", 1);
-
         try
         {
             $dbHost = getenv('OPENSHIFT_MYSQL_DB_HOST');
             $dbPort = getenv('OPENSHIFT_MYSQL_DB_PORT');
             $dbUser = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
             $dbPassword = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
-            $db = new PDO("mysql:host=$dbHost:$dbPort; dbname=type_multiplier",$dbUser,$dbPassword); 
+            $db = new PDO("mysql:host=$dbHost:$dbPort; dbname=type_multiplier",$dbUser,$dbPassword);  
         }
         catch (PDOException $ex)
         {
@@ -34,16 +31,16 @@ session_start();
             die();
         }
 
-   $username = $_SESSION['username'];
+        $username = $_SESSION['username'];
 
-    $qry = "SELECT id FROM users WHERE username = '$username'";
-    $qry = $db->prepare("SELECT id FROM users WHERE username = :username");
-    $qry->bindValue(':username', $username);
-    $qry->execute();
-    while ($row = $qry->fetch(PDO::FETCH_ASSOC))
-    {
-        $userId = $row['id'];
-    }
+        $qry = "SELECT id FROM users WHERE username = '$username'";
+        $qry = $db->prepare("SELECT id FROM users WHERE username = :username");
+        $qry->bindValue(':username', $username);
+        $qry->execute();
+        while ($row = $qry->fetch(PDO::FETCH_ASSOC))
+        {
+            $userId = $row['id'];
+        }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////

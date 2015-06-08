@@ -1,23 +1,21 @@
 <?php
-    error_reporting(E_ALL);
-    ini_set("display_errors", 1);
     $op = $_GET['op'];
 
     try
-        {
-            $dbHost = getenv('OPENSHIFT_MYSQL_DB_HOST');
-            $dbPort = getenv('OPENSHIFT_MYSQL_DB_PORT');
-            $dbUser = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
-            $dbPassword = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
-            $db = new PDO("mysql:host=$dbHost:$dbPort; dbname=type_multiplier",$dbUser,$dbPassword); 
-        }
-        catch (PDOException $ex)
-        {
-            echo 'Error!: ' . $ex->getMessage();
-            die();
-        }
+    {
+        $dbHost = getenv('OPENSHIFT_MYSQL_DB_HOST');
+        $dbPort = getenv('OPENSHIFT_MYSQL_DB_PORT');
+        $dbUser = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
+        $dbPassword = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
+        $db = new PDO("mysql:host=$dbHost:$dbPort; dbname=type_multiplier",$dbUser,$dbPassword); 
+    }
+    catch (PDOException $ex)
+    {
+        echo 'Error!: ' . $ex->getMessage();
+        die();
+    }
 
-       switch ($op) {
+    switch ($op) {
 
         case 'save':
             $id = $_GET['id'];
@@ -74,7 +72,6 @@
         case 'addParty':
             $name = $_GET['name'];
             $userId = $_GET['userId'];
-            echo "We're here! " . $name . " " . $userId;
             $qry = $db->prepare("INSERT INTO party (userId, name) VALUES (:userId, :name);");
             $qry->bindValue(':userId', $userId);
             $qry->bindValue(':name', $name);

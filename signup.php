@@ -18,8 +18,7 @@ session_start();
         <?php
 
         require "password.php";
-        error_reporting(E_ALL);
-        ini_set("display_errors", 1);
+
         $usernameSent = isset($_POST["username"]);
         $username = "";
 
@@ -47,12 +46,6 @@ session_start();
             $dbUser = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
             $dbPassword = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
             $db = new PDO("mysql:host=$dbHost:$dbPort; dbname=type_multiplier",$dbUser,$dbPassword); 
-
-            //echo "host:$dbHost:$dbPort dbName:$dbName user:$dbUser password:$dbPassword<br />\n";
-
-            //$user = 'php';
-            //$password = 'passw0rd';
-            //$db = new PDO("mysql:host=localhost; dbname=type_multiplier",$user,$password); 
         }
         catch (PDOException $ex)
         {
