@@ -15,8 +15,6 @@ session_start();
         <h3>Type Modifier Calculator</h3>
 
         <?php
-        
-        require "password.php";
 
         $usernameSent = isset($_POST["username"]);
         $username = "";
